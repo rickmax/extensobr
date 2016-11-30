@@ -1,41 +1,56 @@
 # Extensobr
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/extensobr`. To experiment with that code, run `bin/console` for an interactive prompt.
+Esta gem foi desenvolvida para auxiliar no desenvolvimento de aplicações onde é necessário escrever ou imprimir números ou moedas por extenso como por exemplo em recibos, contratos entre outros.
 
-TODO: Delete this and the text above, and describe your gem
 
-## Installation
+## Instalação
 
-Add this line to your application's Gemfile:
+Adicionando em sua Gemfile:
 
 ```ruby
 gem 'extensobr'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Ou instale você mesmo:
 
     $ gem install extensobr
 
-## Usage
+## Exemplos de uso
 
-TODO: Write usage instructions here
+Para obter o extenso de um número, utilize GExtenso.numero.
 
-## Development
+    irb
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+require 'Extensobr.rb'
+ 
+    puts Extenso.numero(832); # oitocentos e trinta e dois
+    puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Para obter o extenso de um valor monetário, utilize GExtenso.moeda.
 
-## Contributing
+    require 'Extenso.rb'
+ 
+## IMPORTANTE: este método recebe um valor inteiro(int), para a contagem das casas decimais!
+    
+    puts Extenso.moeda(15402) # cento e cinquenta e quatro reais e dois centavos
+    puts Extenso.moeda(47)   # quarenta e sete centavos
+    puts Extenso.moeda(357082, 2, ['peseta', 'pesetas', Extenso::GENERO_FEM], ['cêntimo', 'cêntimos', Extenso::GENERO_MASC])
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/extensobr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+## três mil, quinhentas e setenta pesetas e oitenta e dois cêntimos
+
+# Developers
+
+[Henrique Max](https://github.com/rickmax),
+[Fausto G. Cintra](https://github.com/goncin)
+
+## Como contribuir?
+
+1. Fazer um fork do projeto
+1. Fazer os devidos ajustes com os respectivos testes
+1. Fazer pull request
 
 
-## License
+## Licença
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+Está Gem esta disponível sob ostermos de licença [MIT License](http://opensource.org/licenses/MIT).
 
