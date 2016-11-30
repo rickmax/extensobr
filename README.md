@@ -26,7 +26,7 @@ require 'Extensobr.rb'
     puts Extenso.numero(832); # oitocentos e trinta e dois
     puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
 
-Para obter o extenso de um valor monetário, utilize GExtenso.moeda.
+Para obter o extenso de um valor monetário, utilize Extenso.moeda.
 
     require 'Extenso.rb'
  
