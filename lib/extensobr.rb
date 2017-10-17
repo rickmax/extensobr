@@ -299,8 +299,8 @@ class Extenso
 
       # Chamada recursiva à função para processar resto se este for maior que zero.
       # O conectivo 'e' é utilizado entre milhões e números entre 1 e 99, bem como antes de centenas exatas.
-      if resto && ((resto >= 1 && resto <= 99) || resto % 100 == 0)
-        ret += ' e ' + ret.numero(resto, genero)
+      if resto && (resto >= 1 && resto <= 99)
+        ret += ' e ' + self.numero(resto, genero)
       # Nos demais casos, após o milhão é utilizada a vírgula.
       elsif resto > 0
         ret += ', ' + self.numero(resto, genero)
