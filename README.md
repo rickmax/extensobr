@@ -38,10 +38,17 @@ Para obter o extenso de um valor monetário, utilize Extenso.moeda.
 
 ## três mil, quinhentas e setenta pesetas e oitenta e dois cêntimos
 
+Para obter o valor em real de um número, utilize Extenso.real_formatado.
+
+    Extenso.real_formatado(154.55) # R$ 154,55
+    Extenso.real_formatado(0) # R$ 0,00
+    Extenso.real_formatado(1) # R$ 1,00
+
 # Developers
 
 [Henrique Max](https://github.com/rickmax),
-[Fausto G. Cintra](https://github.com/goncin)
+[Fausto G. Cintra](https://github.com/goncin),
+[Victor Eduardo](https://github.com/victoreduardo)
 
 ## Como contribuir?
 

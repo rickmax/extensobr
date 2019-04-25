@@ -447,5 +447,14 @@ class Extenso
     end
   end
 
-  
+  # Gera o valor em formato de Real
+  #
+  # Exemplo:
+  #   Extenso.real_formatado(10) - R$ 10,00
+  #   Extenso.real_formatado(1.55) - R$ 1,55
+  #
+  # @params[Object]
+  def self.real_formatado(valor)
+    "R$ #{format("%.2f", valor).to_s.gsub('.', ',')}"
+  end
 end
