@@ -384,8 +384,9 @@ class Extenso
     # O extenso para a parte_inteira somente será gerado se esta for maior que zero. Para tanto, utilizamos
     # os préstimos do método Extenso::numero().
     if parte_inteira > 0
-      ret = self.numero(parte_inteira, info_unidade[POS_GENERO]) + ' '
+      ret = self.numero(parte_inteira, info_unidade[POS_GENERO]) + ' de '
       ret += parte_inteira == 1 ? info_unidade[NUM_SING] : info_unidade[NUM_PLURAL]
+      ret
     end
 
     # De forma semelhante, o extenso da fracao somente será gerado se esta for maior que zero. */
