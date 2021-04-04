@@ -69,8 +69,110 @@ describe 'Extensobr' do
       expect(Extenso.numero(1000000)).to eq('Um milhão')
       expect(Extenso.numero(999999999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove')
     end
-    it 'retorno de erro para números acima de milhoões' do
-      # expect(Extenso.numero(1000000000)).to raise_error
+    # it 'retorno de erro para números acima de milhoões' do
+    #   expect(Extenso.numero(1000000000)).to raise_error
+    # end
+  end
+
+  context "método extenso.moeda" do
+    it 'retorno de valores por extenso unitários' do
+      expect(Extenso.moeda(0)).to eq('Zero Centavos')
+      expect(Extenso.moeda(0.01)).to eq('Um Centavo')
+      expect(Extenso.moeda(0.02)).to eq('Dois Centavos')
+    end
+    it 'retorno de valores por extenso decimais do Dez' do
+      expect(Extenso.moeda(0.10)).to eq('Dez Centavos')
+      expect(Extenso.moeda(0.11)).to eq('Onze Centavos')
+      expect(Extenso.moeda(0.12)).to eq('Doze Centavos')
+      expect(Extenso.moeda(0.13)).to eq('Treze Centavos')
+      expect(Extenso.moeda(0.14)).to eq('Quatorze Centavos')
+      expect(Extenso.moeda(0.15)).to eq('Quinze Centavos')
+      expect(Extenso.moeda(0.16)).to eq('Dezesseis Centavos')
+      expect(Extenso.moeda(0.17)).to eq('Dezessete Centavos')
+      expect(Extenso.moeda(0.18)).to eq('Dezoito Centavos')
+      expect(Extenso.moeda(0.19)).to eq('Dezenove Centavos')
+    end
+    it 'retorno de valores por extenso decimais do Vinte até Noventa' do
+      expect(Extenso.moeda(0.20)).to eq('Vinte Centavos')
+      expect(Extenso.moeda(0.21)).to eq('Vinte e Um Centavos')
+      expect(Extenso.moeda(0.31)).to eq('Trinta e Um Centavos')
+      expect(Extenso.moeda(0.41)).to eq('Quarenta e Um Centavos')
+      expect(Extenso.moeda(0.51)).to eq('Cinquenta e Um Centavos')
+      expect(Extenso.moeda(0.61)).to eq('Sessenta e Um Centavos')
+      expect(Extenso.moeda(0.71)).to eq('Setenta e Um Centavos')
+      expect(Extenso.moeda(0.81)).to eq('Oitenta e Um Centavos')
+      expect(Extenso.moeda(0.91)).to eq('Noventa e Um Centavos')
+    end
+    it 'retorno de valores por extenso centenas do cem' do
+      expect(Extenso.moeda(100)).to eq('Cem Reais')
+      expect(Extenso.moeda(101)).to eq('Cento e Um Reais')
+      expect(Extenso.moeda(102.2)).to eq('Cento e Dois Reais e Vinte Centavos')
+      expect(Extenso.moeda(110)).to eq('Cento e Dez Reais')
+      expect(Extenso.moeda(111)).to eq('Cento e Onze Reais')
+      expect(Extenso.moeda(120)).to eq('Cento e Vinte Reais')
+      expect(Extenso.moeda(123.45)).to eq('Cento e Vinte e Três Reais e Quarenta e Cinco Centavos')
+      expect(Extenso.moeda(121)).to eq('Cento e Vinte e Um Reais')
+    end
+    it 'retorno de valores por extenso centenas do duzentos' do
+      expect(Extenso.moeda(200)).to eq('Duzentos Reais')
+      expect(Extenso.moeda(201)).to eq('Duzentos e Um Reais')
+      expect(Extenso.moeda(210)).to eq('Duzentos e Dez Reais')
+      expect(Extenso.moeda(211)).to eq('Duzentos e Onze Reais')
+      expect(Extenso.moeda(220)).to eq('Duzentos e Vinte Reais')
+      expect(Extenso.moeda(221)).to eq('Duzentos e Vinte e Um Reais')
+    end
+    it 'retorno de valores por extenso milhares' do
+      expect(Extenso.moeda(1000)).to eq('Um mil Reais')
+      expect(Extenso.moeda(1999)).to eq('Um mil, Novecentos e Noventa e Nove Reais')
+      expect(Extenso.moeda(1999.99)).to eq('Um mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+    end
+    it 'retorno de valores por extenso dezenas de milhares' do
+      expect(Extenso.moeda(10000)).to eq('Dez mil Reais')
+      expect(Extenso.moeda(19999.99)).to eq('Dezenove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+    end
+    it 'retorno de valores por extenso centenas de milhares' do
+      expect(Extenso.moeda(100000)).to eq('Cem mil Reais')
+      expect(Extenso.moeda(199999.99)).to eq('Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+    end
+    it 'retorno de valores por extenso milhões' do
+      expect(Extenso.moeda(1000000)).to eq('Um milhão de Reais')
+      expect(Extenso.moeda(25100000)).to eq('Vinte e Cinco milhões, Cem mil Reais')
+      expect(Extenso.moeda(25199999.99)).to eq('Vinte e Cinco milhões, Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+      expect(Extenso.moeda(999999999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove Reais')
+    end
+    # Desenvolver test para raise error quando numero for inválido
+    # it 'retorno de erro para números acima de milhoões' do
+    #   # expect(Extenso.numero(1000000000)).to raise_error
+    # end
+  end
+
+  context "método extenso.moeda customizado" do
+    it 'retorno de valores por extenso milhões' do
+      expect(
+        Extenso.moeda(
+          3570.82, 
+          2, 
+          ['Peseta', 'Pesetas', 1], 
+          ['Cêntimo', 'Cêntimos', 0]
+        )
+      ).to eq('Três mil, Quinhentas e Setenta Pesetas e Oitenta e Dois Cêntimos')
     end
   end
+
+  context "método extenso.real_formatado" do
+    it 'retorno de valores para moéda brasileira R$' do
+      expect(Extenso.real_formatado(0)).to eq('R$ 0,00')
+      expect(Extenso.real_formatado(0.82)).to eq('R$ 0,82')
+      expect(Extenso.real_formatado(1)).to eq('R$ 1,00')
+      expect(Extenso.real_formatado(10)).to eq('R$ 10,00')
+      expect(Extenso.real_formatado(10.5)).to eq('R$ 10,50')
+      expect(Extenso.real_formatado(100.5)).to eq('R$ 100,50')
+      expect(Extenso.real_formatado(3570.82)).to eq('R$ 3.570,82')
+      expect(Extenso.real_formatado(30570.82)).to eq('R$ 30.570,82')
+      expect(Extenso.real_formatado(300570.82)).to eq('R$ 300.570,82')
+      expect(Extenso.real_formatado(1300570.82)).to eq('R$ 1.300.570,82')
+      expect(Extenso.real_formatado(100300570.82)).to eq('R$ 100.300.570,82')
+    end
+  end
+  
 end

@@ -17,7 +17,7 @@ Ou instale você mesmo:
 
 ## Exemplos de uso
 
-Para obter o extenso de um número, utilize Extenso.numero.
+Para obter o extenso de um número, utilize Extenso.numero() OBS: Ovalor deve ser do tipo "INTEGER".
 
     irb
 
@@ -26,15 +26,15 @@ require 'Extensobr.rb'
     puts Extenso.numero(832); # oitocentos e trinta e dois
     puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
 
-Para obter o extenso de um valor monetário, utilize Extenso.moeda.
+Para obter o extenso de um valor monetário, utilize Extenso.moeda() OBS: Ovalor deve ser do tipo "FLOAT".
 
     require 'Extenso.rb'
  
 ## IMPORTANTE: este método recebe um valor inteiro(int), para a contagem das casas decimais!
     
-    puts Extenso.moeda(15402) # cento e cinquenta e quatro reais e dois centavos
-    puts Extenso.moeda(47)   # quarenta e sete centavos
-    puts Extenso.moeda(357082, 2, ['peseta', 'pesetas', Extenso::GENERO_FEM], ['cêntimo', 'cêntimos', Extenso::GENERO_MASC])
+    puts Extenso.moeda(154.02) # cento e cinquenta e quatro reais e dois centavos
+    puts Extenso.moeda(0.47)   # quarenta e sete centavos
+    puts Extenso.moeda(3570.82, 2, ['peseta', 'pesetas', Extenso::GENERO_FEM], ['cêntimo', 'cêntimos', Extenso::GENERO_MASC])
 
 ## três mil, quinhentas e setenta pesetas e oitenta e dois cêntimos
 

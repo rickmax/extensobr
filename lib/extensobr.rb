@@ -1,38 +1,8 @@
 require "extensobr/version"
 class Extenso
-# Extenso class file
 
-# Extenso é uma classe que gera a representação por extenso de um número ou valor monetário.
-#
-# ATENÇÃO: A PÁGINA DE CÓDIGO DESTE ARQUIVO É UTF-8 (Unicode)!
-# 
-# Sua implementação foi feita como prova de conceito, utilizando:
-# * Métodos estáticos, implementando o padrão de projeto ("design pattern") SINGLETON;
-# * Chamadas recursivas a métodos, minimizando repetições e mantendo o código enxuto; e
-# * Tratamento de erros por intermédio de exceções.
-#
-# = EXEMPLOS DE USO =
-#
-# Para obter o extenso de um número, utilize Extenso.numero.
-# 
-# puts Extenso.numero(832); # oitocentos e trinta e dois
-# puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
-# 
-#
-# Para obter o extenso de um valor monetário, utilize Extenso.moeda.
-# 
-# # IMPORTANTE: veja nota sobre o parâmetro 'valor' na documentação do método!
-#
-# puts Extenso.moeda(15402) # cento e cinquenta e quatro reais e dois centavos
-#
-# puts Extenso.moeda(47)   # quarenta e sete centavos
-#
-# puts Extenso.moeda(357082, 2,
-#   ['peseta', 'pesetas', Extenso::GENERO_FEM],
-#   ['cêntimo', 'cêntimos', Extenso::GENERO_MASC])
-#   # três mil, quinhentas e setenta pesetas e oitenta e dois cêntimos
-#
-  
+  BRL = {:delimiter => ".", :separator => ",", :unit => "R$", :precision => 2, :position => "before"}
+ 
   NUM_SING = 0
   NUM_PLURAL = 1
   POS_GENERO = 2
@@ -205,6 +175,10 @@ class Extenso
   def self.is_int(s)
     Integer(s) != nil rescue false
   end
+
+  def self.is_float?(str)
+    !!Float(str) rescue false
+  end
   
   #######################################################################################################################################
   
@@ -227,7 +201,6 @@ class Extenso
       raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
     elsif valor <= 0
       'Zero'
-      # raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
     elsif valor > VALOR_MAXIMO
       raise "[Exceção em Extenso.numero] Parâmetro '#{valor} deve ser um inteiro entre 1 e #{VALOR_MAXIMO.to_s} (recebido: '#{valor}')" 
     elsif genero != GENERO_MASC && genero != GENERO_FEM
@@ -325,11 +298,7 @@ class Extenso
    #
    #
    # PARÂMETROS:
-   # valor (Integer) O valor monetário cujo extenso se deseja gerar.
-   #   ATENÇÃO: PARA EVITAR OS CONHECIDOS PROBLEMAS DE ARREDONDAMENTO COM NÚMEROS DE PONTO FLUTUANTE, O VALOR DEVE SER PASSADO
-   #   JÁ DEVIDAMENTE MULTIPLICADO POR 10 ELEVADO A $casasDecimais (o que equivale, normalmente, a passar o valor com centavos
-   #   multiplicado por 100)
-   #
+   # valor (Float) O valor monetário cujo extenso se deseja gerar.
    # casas_decimais (Integer) [Opcional; valor padrão: 2] Número de casas decimais a serem consideradas como parte fracionária (centavos)
    #
    # info_unidade (Array) [Opcional; valor padrão: ['real', 'reais', Extenso::GENERO_MASC]] Fornece informações sobre a moeda a ser
@@ -345,11 +314,11 @@ class Extenso
    
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
 
-    if ! self.is_int(valor)
+    if ! self.is_float?(valor.to_f.round(casas_decimais).to_s)
       raise "[Exceção em Extenso.moeda] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
 
     elsif valor <= 0
-      raise "[Exceção em Extenso.moeda] Parâmetro valor igual a ou menor que zero (recebido: '#{valor}')"
+      "Zero"
 
     elsif ! self.is_int(casas_decimais) || casas_decimais < 0
       raise "[Exceção em Extenso.moeda] Parâmetro 'casas_decimais' não é numérico ou é menor que zero (recebido: '#{casas_decimais}')"
@@ -374,18 +343,16 @@ class Extenso
 
     ret = ''
 
-    # A parte inteira do valor monetário corresponde ao valor passado dividido por 10 elevado a casas_decimais, desprezado o resto.
-    # Assim, com o padrão de 2 casas_decimais, o valor será dividido por 100 (10^2), e o resto é descartado utilizando-se floor().
-    parte_inteira = valor.floor / (10**casas_decimais)
+    valor = sprintf("%#{casas_decimais.to_f / 100}f", valor)
+    # A parte inteira do valor monetário corresponde ao valor passado antes do '.' no tipo float.
+    parte_inteira = valor.split('.')[0].to_i
 
-    # A parte fracionária ('centavos'), por seu turno, corresponderá ao resto da divisão do valor por 10 elevado a casas_decimais.
-    # No cenário comum em que trabalhamos com 2 casas_decimais, será o resto da divisão do valor por 100 (10^2).
-    fracao = valor % (10**casas_decimais)
+    # A parte fracionária ('centavos'), por seu turno, corresponderá ao valor passado depois do  '.'
+    fracao = valor.to_s.split('.')[1].to_i
 
-    # O extenso para a parte_inteira somente será gerado se esta for maior que zero. Para tanto, utilizamos
     # os préstimos do método Extenso::numero().
     if parte_inteira > 0
-      ret = self.numero(parte_inteira, info_unidade[POS_GENERO]) + ' de '
+      ret = self.numero(parte_inteira, info_unidade[POS_GENERO]) + ((parte_inteira >= 1000000 && (parte_inteira.to_s.chars.reverse[5] == "0" ) )  ? ' de ' : ' ')
       ret += parte_inteira == 1 ? info_unidade[NUM_SING] : info_unidade[NUM_PLURAL]
       ret
     end
@@ -397,6 +364,11 @@ class Extenso
       if parte_inteira > 0
         ret += ' e '
       end
+      ret += self.numero(fracao, info_fracao[POS_GENERO]) + ' '
+      ret += fracao == 1 ? info_fracao[NUM_SING] : info_fracao[NUM_PLURAL]
+    end
+
+    if valor.to_f == 0
       ret += self.numero(fracao, info_fracao[POS_GENERO]) + ' '
       ret += parte_inteira == 1 ? info_fracao[NUM_SING] : info_fracao[NUM_PLURAL]
     end
@@ -458,6 +430,18 @@ class Extenso
   #
   # @params[Object]
   def self.real_formatado(valor)
-    "R$ #{format("%.2f", valor).to_s.gsub('.', ',')}"
+    float_valor = sprintf("%#0.02f", valor)
+    if float_valor.chars.count >= 7
+      float_valor = float_valor.chars.reverse.insert(6, '.').reverse.join
+    end
+
+    if float_valor.chars.count >= 11
+      float_valor = float_valor.chars.reverse.insert(10, '.').reverse.join
+    end
+
+    float_valor = float_valor.chars.reverse
+    float_valor[2] = ','
+
+    "R$ #{float_valor.reverse.join}"
   end
 end
