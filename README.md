@@ -16,7 +16,7 @@ Ou instale você mesmo:
     $ gem install extensobr
 
 ## Exemplos de uso
-### IMPORTANTE: este método recebe um valor decimal(float), para a contagem das casas decimais!
+### IMPORTANTE: este método recebe um valor inteiro(integer)
 Para obter o extenso de um número, utilize Extenso.numero() OBS: Ovalor deve ser do tipo "INTEGER".
 
     irb
@@ -26,7 +26,7 @@ require 'Extensobr.rb'
     puts Extenso.numero(832); # oitocentos e trinta e dois
     puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
  
-### IMPORTANTE: este método recebe um valor decimal(float), para a contagem das casas decimais!
+### IMPORTANTE: este método recebe um valor decimal(float), para a contagem das casas decimais
 
 Para obter o extenso de um valor monetário, utilize Extenso.moeda() OBS: Ovalor deve ser do tipo "FLOAT".
 
