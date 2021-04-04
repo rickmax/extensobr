@@ -125,8 +125,8 @@ class Extenso
   MILHAR = 'mil'
 
   MILHOES = {
-    NUM_SING => 'Milhão',
-    NUM_PLURAL => 'Milhões'
+    NUM_SING => 'milhão',
+    NUM_PLURAL => 'milhões'
   }
 
    UNIDADES_ORDINAL = {
@@ -226,9 +226,10 @@ class Extenso
     if !is_int(valor)
       raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
     elsif valor <= 0
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
+      'Zero'
+      # raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
     elsif valor > VALOR_MAXIMO
-      raise '[Exceção em Extenso::numero] Parâmetro ''valor'' deve ser um inteiro entre 1 e ' + VALOR_MAXIMO.to_s + " (recebido: '#{valor}')"
+      raise "[Exceção em Extenso.numero] Parâmetro '#{valor} deve ser um inteiro entre 1 e #{VALOR_MAXIMO.to_s} (recebido: '#{valor}')" 
     elsif genero != GENERO_MASC && genero != GENERO_FEM
       raise "Exceção em Extenso: valor incorreto para o parâmetro 'genero' (recebido: '#{genero}')"
 
@@ -423,7 +424,8 @@ class Extenso
     if !is_int(valor)
       raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
     elsif valor <= 0
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
+      'Zero'
+      # raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
     elsif valor > VALOR_MAXIMO
       raise '[Exceção em Extenso::numero] Parâmetro ''valor'' deve ser um inteiro entre 1 e ' + VALOR_MAXIMO.to_s + " (recebido: '#{valor}')"
     elsif genero != GENERO_MASC && genero != GENERO_FEM
