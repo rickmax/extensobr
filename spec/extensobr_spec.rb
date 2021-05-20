@@ -69,9 +69,12 @@ describe 'Extensobr' do
       expect(Extenso.numero(1000000)).to eq('Um milhão')
       expect(Extenso.numero(999999999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove')
     end
-    # it 'retorno de erro para números acima de milhoões' do
-    #   expect(Extenso.numero(1000000000)).to raise_error
-    # end
+    it 'retorno de numeros por extenso com casas decimais' do
+      expect(Extenso.numero(2356587.36)).to eq('Dois milhões, Trezentos e Cinquenta e Seis mil, Quinhentos e Oitenta e Sete vírgula Trinta e Seis')
+      expect(Extenso.numero(0.736)).to eq('Zero vírgula Setecentos e Trinta e Seis')
+      expect(Extenso.numero(137.102)).to eq('Cento e Trinta e Sete vírgula Cento e Dois')
+      expect(Extenso.numero(93.3)).to eq('Noventa e Três vírgula Três')
+    end
   end
 
   context "método extenso.moeda" do
