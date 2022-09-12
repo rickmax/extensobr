@@ -439,15 +439,23 @@ class Extenso
     # VALOR DE RETORNO:
     # (String) O número por extenso
 
-    # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
+    # ----- CARREGA CONFIGURAÇÃO -----
+    load_config
 
-    if !int?(valor)
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
-    elsif valor <= 0
+    # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
+    if valor.nil?
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil]
+
+      return 'Zero'
+    end
+
+    raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')" unless int?(valor)
+
+    if valor <= 0
       'Zero'
       # raise "[Exceção em Extenso.numero] Parâmetro 'valor' igual a ou menor que zero (recebido: '#{valor}')"
     elsif valor > VALOR_MAXIMO
-      raise '[Exceção em Extenso::numero] Parâmetro ''valor'' deve ser um inteiro entre 1 e ' + VALOR_MAXIMO.to_s + " (recebido: '#{valor}')"
+      raise "[Exceção em Extenso::numero] Parâmetro ''valor'' deve ser um inteiro entre 1 e #{VALOR_MAXIMO} (recebido: '#{valor}')"
     elsif genero != GENERO_MASC && genero != GENERO_FEM
       raise "Exceção em Extenso: valor incorreto para o parâmetro 'genero' (recebido: '#{genero}')"
     # ------------------------------------------------
@@ -456,17 +464,17 @@ class Extenso
     elsif valor >= 10 && valor <= 99
       dezena = valor - (valor % 10)
       resto = valor - dezena
-      ret = DEZENAS_ORDINAL[genero][dezena] + ' '
-      ret += ordinal(resto, genero) if resto > 0
+      ret = "#{DEZENAS_ORDINAL[genero][dezena]} "
+      ret += ordinal(resto, genero) if resto.positive?
       ret
     elsif valor >= 100 && valor <= 999
       centena = valor - (valor % 100)
       resto = valor - centena
-      ret = CENTENAS_ORDINAL[genero][centena] + ' '
-      ret += ordinal(resto, genero) if resto > 0
+      ret = "#{CENTENAS_ORDINAL[genero][centena]} "
+      ret += ordinal(resto, genero) if resto.positive?
       ret
     elsif valor == 1000
-      MILHAR_ORDINAL[genero][valor] + ' '
+      "#{MILHAR_ORDINAL[genero][valor]} "
     end
   end
 
