@@ -7,7 +7,7 @@ require 'yaml'
 
 class Extenso
   @config = {
-    raise_for_nil: ENV['EXTENSO_RAISE_FOR_NIL'] || true
+    raise_for_nil: ENV['EXTENSO_RAISE_FOR_NIL'] || 'true'
   }
 
   @config_loaded = false
@@ -19,7 +19,7 @@ class Extenso
       file_path = ::File.join(Rails.root, 'config', 'extensobr.yml')
       if ::File.exist?(file_path)
         config_file = ::YAML.load_file(file_path)
-        @config[:raise_for_nil] = config_file['raise_for_nil'] || true
+        @config[:raise_for_nil] = config_file['raise_for_nil'] || 'true'
       end
     end
     @config_loaded = true
@@ -238,7 +238,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil]
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -359,7 +359,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil]
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -444,7 +444,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil]
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
