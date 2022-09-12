@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# frozen
-
 require 'extensobr/version'
 require 'yaml'
 
@@ -238,7 +236,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -359,7 +357,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -444,7 +442,7 @@ class Extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' não é nulo (recebido: 'nil')" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
 
       return 'Zero'
     end

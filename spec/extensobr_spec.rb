@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'Extensobr' do
-  context "método extenso.numero" do
+  context 'método extenso.numero' do
     it 'retorno de numeros por extenso unitários' do
       expect(Extenso.numero(0)).to eq('Zero')
       expect(Extenso.numero(1)).to eq('Um')
@@ -58,23 +60,23 @@ describe 'Extensobr' do
       expect(Extenso.numero(1999)).to eq('Um mil, Novecentos e Noventa e Nove')
     end
     it 'retorno de numeros por extenso dezenas de milhares' do
-      expect(Extenso.numero(10000)).to eq('Dez mil')
-      expect(Extenso.numero(19999)).to eq('Dezenove mil, Novecentos e Noventa e Nove')
+      expect(Extenso.numero(10_000)).to eq('Dez mil')
+      expect(Extenso.numero(19_999)).to eq('Dezenove mil, Novecentos e Noventa e Nove')
     end
     it 'retorno de numeros por extenso centenas de milhares' do
-      expect(Extenso.numero(100000)).to eq('Cem mil')
-      expect(Extenso.numero(199999)).to eq('Cento e Noventa e Nove mil, Novecentos e Noventa e Nove')
+      expect(Extenso.numero(100_000)).to eq('Cem mil')
+      expect(Extenso.numero(199_999)).to eq('Cento e Noventa e Nove mil, Novecentos e Noventa e Nove')
     end
     it 'retorno de numeros por extenso milhões' do
-      expect(Extenso.numero(1000000)).to eq('Um milhão')
-      expect(Extenso.numero(999999999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove')
+      expect(Extenso.numero(1_000_000)).to eq('Um milhão')
+      expect(Extenso.numero(999_999_999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove')
     end
     # it 'retorno de erro para números acima de milhoões' do
     #   expect(Extenso.numero(1000000000)).to raise_error
     # end
   end
 
-  context "método extenso.moeda" do
+  context 'método extenso.moeda' do
     it 'retorno de valores por extenso unitários' do
       expect(Extenso.moeda(0)).to eq('Zero Centavos')
       expect(Extenso.moeda(0.01)).to eq('Um Centavo')
@@ -127,39 +129,40 @@ describe 'Extensobr' do
       expect(Extenso.moeda(1999.99)).to eq('Um mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
     end
     it 'retorno de valores por extenso dezenas de milhares' do
-      expect(Extenso.moeda(10000)).to eq('Dez mil Reais')
-      expect(Extenso.moeda(19999.99)).to eq('Dezenove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+      expect(Extenso.moeda(10_000)).to eq('Dez mil Reais')
+      expect(Extenso.moeda(19_999.99)).to eq('Dezenove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
     end
     it 'retorno de valores por extenso centenas de milhares' do
-      expect(Extenso.moeda(100000)).to eq('Cem mil Reais')
-      expect(Extenso.moeda(199999.99)).to eq('Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+      expect(Extenso.moeda(100_000)).to eq('Cem mil Reais')
+      expect(Extenso.moeda(199_999.99)).to eq('Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
     end
     it 'retorno de valores por extenso milhões' do
-      expect(Extenso.moeda(1000000)).to eq('Um milhão de Reais')
-      expect(Extenso.moeda(25100000)).to eq('Vinte e Cinco milhões, Cem mil Reais')
-      expect(Extenso.moeda(25199999.99)).to eq('Vinte e Cinco milhões, Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
-      expect(Extenso.moeda(999999999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove Reais')
+      expect(Extenso.moeda(1_000_000)).to eq('Um milhão de Reais')
+      expect(Extenso.moeda(25_100_000)).to eq('Vinte e Cinco milhões, Cem mil Reais')
+      expect(Extenso.moeda(25_199_999.99)).to eq('Vinte e Cinco milhões, Cento e Noventa e Nove mil, Novecentos e Noventa e Nove Reais e Noventa e Nove Centavos')
+      expect(Extenso.moeda(999_999_999)).to eq('Novecentos e Noventa e Nove milhões, Novecentos e Noventa e Nove mil, Novecentos e Noventa e Nove Reais')
     end
+
     # Desenvolver test para raise error quando numero for inválido
     # it 'retorno de erro para números acima de milhoões' do
     #   # expect(Extenso.numero(1000000000)).to raise_error
     # end
   end
 
-  context "método extenso.moeda customizado" do
+  context 'método extenso.moeda customizado' do
     it 'retorno de valores por extenso milhões' do
       expect(
         Extenso.moeda(
-          3570.82, 
-          2, 
-          ['Peseta', 'Pesetas', 1], 
+          3570.82,
+          2,
+          ['Peseta', 'Pesetas', 1],
           ['Cêntimo', 'Cêntimos', 0]
         )
       ).to eq('Três mil, Quinhentas e Setenta Pesetas e Oitenta e Dois Cêntimos')
     end
   end
 
-  context "método extenso.real_formatado" do
+  context 'método extenso.real_formatado' do
     it 'retorno de valores para moéda brasileira R$' do
       expect(Extenso.real_formatado(0)).to eq('R$ 0,00')
       expect(Extenso.real_formatado(0.82)).to eq('R$ 0,82')
@@ -168,11 +171,27 @@ describe 'Extensobr' do
       expect(Extenso.real_formatado(10.5)).to eq('R$ 10,50')
       expect(Extenso.real_formatado(100.5)).to eq('R$ 100,50')
       expect(Extenso.real_formatado(3570.82)).to eq('R$ 3.570,82')
-      expect(Extenso.real_formatado(30570.82)).to eq('R$ 30.570,82')
-      expect(Extenso.real_formatado(300570.82)).to eq('R$ 300.570,82')
-      expect(Extenso.real_formatado(1300570.82)).to eq('R$ 1.300.570,82')
-      expect(Extenso.real_formatado(100300570.82)).to eq('R$ 100.300.570,82')
+      expect(Extenso.real_formatado(30_570.82)).to eq('R$ 30.570,82')
+      expect(Extenso.real_formatado(300_570.82)).to eq('R$ 300.570,82')
+      expect(Extenso.real_formatado(1_300_570.82)).to eq('R$ 1.300.570,82')
+      expect(Extenso.real_formatado(100_300_570.82)).to eq('R$ 100.300.570,82')
     end
   end
-  
+
+  context 'valor de payload nil' do
+    it 'retorno quando envia nil com raise ligado' do
+      expect { Extenso.numero(nil) }.to raise_error "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo"
+      expect { Extenso.moeda(nil) }.to raise_error "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo"
+      expect { Extenso.ordinal(nil) }.to raise_error "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo"
+    end
+
+    it 'retorno quando envia nil com raise desligado' do
+      ENV['EXTENSO_RAISE_FOR_NIL'] = 'false'
+      Object.send(:remove_const, :Extenso) if Kernel.const_defined?('Extenso')
+      load 'lib/extensobr.rb'
+      expect(Extenso.numero(nil)).to eq('Zero')
+      expect(Extenso.moeda(nil)).to eq('Zero')
+      expect(Extenso.ordinal(nil)).to eq('Zero')
+    end
+  end
 end
