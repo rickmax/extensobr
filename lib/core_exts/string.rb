@@ -10,12 +10,12 @@ String.class_eval do
   #
   # Caso o tipo não seja informado é inferido primeiro tentando encontrar um padrão de Float
   # caso encontre ele supõe que o tipo é moeda. Caso contrario o tipo será numero.
-  def por_extenso(type = nil, *args)
-    return por_extenso_numero(*args) if type == :numero
+  def por_extenso(*args)
+    return por_extenso_numero(*args) if args.include? :numero
 
-    return por_extenso_moeda(*args) if type == :moeda
+    return por_extenso_moeda(*args) if args.include? :moeda
 
-    return por_extenso_ordinal(*args) if type == :ordinal
+    return por_extenso_ordinal(*args) if args.include? :ordinal
 
     number = scan(/\d+[,.]\d+/).first
     return por_extenso_moeda(*args) unless number.nil? || number.empty?
@@ -25,7 +25,8 @@ String.class_eval do
 
   def por_extenso_moeda(*args)
     number = gsub('_', '').scan(/\d+[,.]\d+/).first
-    Extenso.moeda(number.to_f, *args)
+    params = args - [:moeda]
+    Extenso.moeda(number.to_f, *params)
   end
 
   def por_extenso_numero(*args)

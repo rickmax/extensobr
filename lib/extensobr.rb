@@ -14,15 +14,15 @@ if Settings.settings[:use_core_exts] == 'true'
 end
 
 class Extenso
-  BRL = { delimiter: '.', separator: ',', unit: 'R$', precision: 2, position: 'before' }.freeze
+  BRL = { delimiter: '.', separator: ',', unit: 'R$', precision: 2, position: 'before' }.freeze unless Extenso.const_defined?('BRL')
 
-  NUM_SING = 0
-  NUM_PLURAL = 1
-  POS_GENERO = 2
-  GENERO_MASC = 0
-  GENERO_FEM = 1
+  NUM_SING = 0 unless Extenso.const_defined?('NUM_SING')
+  NUM_PLURAL = 1 unless Extenso.const_defined?('NUM_PLURAL')
+  POS_GENERO = 2 unless Extenso.const_defined?('POS_GENERO')
+  GENERO_MASC = 0 unless Extenso.const_defined?('GENERO_MASC')
+  GENERO_FEM = 1 unless Extenso.const_defined?('GENERO_FEM')
 
-  VALOR_MAXIMO = 999_999_999
+  VALOR_MAXIMO = 999_999_999 unless Extenso.const_defined?('VALOR_MAXIMO')
 
   # As unidades 1 e 2 variam em gênero, pelo que precisamos de dois conjuntos de strings (masculinas e femininas) para as unidades
   UNIDADES = {
@@ -48,7 +48,7 @@ class Extenso
       8 => 'Oito',
       9 => 'Nove'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('UNIDADES')
 
   DE11A19 = {
     11 => 'Onze',
@@ -60,7 +60,7 @@ class Extenso
     17 => 'Dezessete',
     18 => 'Dezoito',
     19 => 'Dezenove'
-  }.freeze
+  }.freeze unless Extenso.const_defined?('DE11A19')
 
   DEZENAS = {
     10 => 'Dez',
@@ -72,9 +72,9 @@ class Extenso
     70 => 'Setenta',
     80 => 'Oitenta',
     90 => 'Noventa'
-  }.freeze
+  }.freeze unless Extenso.const_defined?('DEZENAS')
 
-  CENTENA_EXATA = 'Cem'
+  CENTENA_EXATA = 'Cem' unless Extenso.const_defined?('CENTENA_EXATA')
 
   # As centenas, com exceção de 'cento', também variam em gênero. Aqui também se faz
   # necessário dois conjuntos de strings (masculinas e femininas).
@@ -102,15 +102,15 @@ class Extenso
       800 => 'Oitocentas',
       900 => 'Novecentas'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('CENTENAS')
 
   # 'Mil' é invariável, seja em gênero, seja em número
-  MILHAR = 'mil'
+  MILHAR = 'mil' unless Extenso.const_defined?('MILHAR')
 
   MILHOES = {
     NUM_SING => 'milhão',
     NUM_PLURAL => 'milhões'
-  }.freeze
+  }.freeze unless Extenso.const_defined?('MILHOES')
 
   UNIDADES_ORDINAL = {
     GENERO_MASC => {
@@ -135,7 +135,7 @@ class Extenso
       8 => 'Oitava',
       9 => 'Nona'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('UNIDADES_ORDINAL')
 
   DEZENAS_ORDINAL = {
     GENERO_MASC => {
@@ -160,7 +160,7 @@ class Extenso
       80 => 'Octogésima',
       90 => 'Nonagésima'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('DEZENAS_ORDINAL')
 
   CENTENAS_ORDINAL = {
     GENERO_MASC => {
@@ -185,7 +185,7 @@ class Extenso
       800 => 'Octingentésima',
       900 => 'Noningentésima'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('CENTENAS_ORDINAL')
 
   MILHAR_ORDINAL = {
     GENERO_MASC => {
@@ -194,7 +194,7 @@ class Extenso
     GENERO_FEM => {
       1000 => 'Milésima'
     }
-  }.freeze
+  }.freeze unless Extenso.const_defined?('MILHAR_ORDINAL')
 
   def self.int?(payload)
     !Integer(payload).nil?
@@ -346,7 +346,7 @@ class Extenso
 
       return 'Zero Centavos'
     end
-
+    
     unless float?(valor.to_f.round(casas_decimais).to_s)
       raise "[Exceção em Extenso.moeda] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
     end

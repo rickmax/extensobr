@@ -1,6 +1,6 @@
 # Extensobr
 
-Esta gem foi desenvolvida para auxiliar no desenvolvimento de aplicações onde é necessário escrever ou imprimir números ou moedas por extenso como por exemplo em recibos, contratos entre outros.
+Esta gem foi desenvolvida para auxiliar no desenvolvimento de aplicações onde é necessário escrever ou números ou moedas por extenso como por exemplo em recibos, contratos entre outros.
 
 
 ## Instalação
@@ -18,13 +18,20 @@ Ou instale você mesmo:
 ## Exemplos de uso
 ### IMPORTANTE: este método recebe um valor inteiro(integer)
 Para obter o extenso de um número, utilize Extenso.numero() OBS: Ovalor deve ser do tipo "INTEGER".
+Padrão de genero da escrita é passado com um parâmetro do tipo integer, Masculino: 0, Feminino: 1, sendo que o padrão é masculino. 
 
     irb
 
 require 'Extensobr.rb'
  
     puts Extenso.numero(832); # oitocentos e trinta e dois
-    puts Extenso.numero(832, Extenso::GENERO_FEM) # oitocentas e trinta e duas
+    puts Extenso.numero(832, 1) # oitocentas e trinta e duas
+
+    # Novo método usando a classes do ruby a partir da versão 1.2 em diante.
+    puts 832.por_extenso; # oitocentos e trinta e dois
+    puts 832.por_extenso(1) # oitocentas e trinta e duas
+    puts "832".por_extenso; # oitocentos e trinta e dois
+    puts "832".por_extenso(1) # oitocentas e trinta e duas
  
 ### IMPORTANTE: este método recebe um valor decimal(float), para a contagem das casas decimais
 
@@ -34,10 +41,17 @@ require 'Extenso.rb'
 
     puts Extenso.moeda(154.02) # cento e cinquenta e quatro reais e dois centavos
     puts Extenso.moeda(0.47)   # quarenta e sete centavos
+    
+    # Novos métodos usando a classes do ruby a partir da versão 1.2 em diante.
+    puts 154.02.por_extenso # cento e cinquenta e quatro reais e dois centavos
+    puts 0.47.por_extenso   # quarenta e sete centavos
+    puts "154.02".por_extenso # cento e cinquenta e quatro reais e dois centavos
+    puts "0.47".por_extenso   # quarenta e sete centavos
 
 ### Customize sua moéda passando como parâmetro
     
     puts Extenso.moeda(3570.82, 2, ['peseta', 'pesetas', Extenso::GENERO_FEM], ['cêntimo', 'cêntimos', Extenso::GENERO_MASC])
+    # Três mil, Quinhentas e Setenta pesetas e Oitenta e Dois cêntimos
 
 ### Para obter o valor numérico em reais de um número decimal
 
@@ -48,9 +62,9 @@ require 'Extenso.rb'
 # Developers
 
 [Henrique Max](https://github.com/rickmax),
+[Renan Garcia](https://github.com/renan-garcia),
 [Fausto G. Cintra](https://github.com/goncin),
 [Victor Eduardo](https://github.com/victoreduardo)
-[Renan Garcia](https://github.com/renan-garcia)
 
 ## Como contribuir?
 
@@ -61,5 +75,5 @@ require 'Extenso.rb'
 
 ## Licença
 
-Está Gem esta disponível sob ostermos de licença [MIT License](http://opensource.org/licenses/MIT).
+Está Gem esta disponível sob os termos de licença [MIT License](http://opensource.org/licenses/MIT).
 

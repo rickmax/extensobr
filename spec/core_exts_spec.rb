@@ -16,6 +16,10 @@ describe 'Core Extensions' do
       expect(8.por_extenso).to eq('Oito')
       expect(9.por_extenso).to eq('Nove')
     end
+    it 'retorno de numeros por extenso unitários genero feminino' do
+      expect(1.por_extenso(1)).to eq('Uma')
+      expect(2.por_extenso(1)).to eq('Duas')
+    end
     it 'retorno de numeros por extenso decimais do Dez' do
       expect(10.por_extenso).to eq('Dez')
       expect(11.por_extenso).to eq('Onze')
@@ -165,6 +169,10 @@ describe 'Core Extensions' do
       expect('7'.por_extenso).to eq('Sete')
       expect('8'.por_extenso).to eq('Oito')
       expect('9'.por_extenso).to eq('Nove')
+    end
+    it 'retorno de numeros por extenso unitários genero feminino' do
+      expect('1'.por_extenso(1)).to eq('Uma')
+      expect('2'.por_extenso(1)).to eq('Duas')
     end
     it 'retorno de numeros por extenso decimais do Dez' do
       expect('10'.por_extenso).to eq('Dez')
