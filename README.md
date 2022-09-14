@@ -50,6 +50,7 @@ require 'Extenso.rb'
 [Henrique Max](https://github.com/rickmax),
 [Fausto G. Cintra](https://github.com/goncin),
 [Victor Eduardo](https://github.com/victoreduardo)
+[Renan Garcia](https://github.com/renan-garcia)
 
 ## Como contribuir?
 

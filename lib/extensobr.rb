@@ -1,28 +1,19 @@
 # frozen_string_literal: true
 
 require 'extensobr/version'
-require 'yaml'
+require 'settings'
+
+# ----- CARREGA CONFIGURAÇÃO -----
+Settings.load_settings
+
+# ----- CARREGA CORE EXTENSÕES -----
+if Settings.settings[:use_core_exts] == 'true'
+  require 'core_exts/float'
+  require 'core_exts/integer'
+  require 'core_exts/string'
+end
 
 class Extenso
-  @config = {
-    raise_for_nil: ENV['EXTENSO_RAISE_FOR_NIL'] || 'true'
-  }
-
-  @config_loaded = false
-
-  def self.load_config
-    return if @config_loaded
-
-    if Kernel.const_defined? 'Rails'
-      file_path = ::File.join(Rails.root, 'config', 'extensobr.yml')
-      if ::File.exist?(file_path)
-        config_file = ::YAML.load_file(file_path)
-        @config[:raise_for_nil] = config_file['raise_for_nil'] || 'true'
-      end
-    end
-    @config_loaded = true
-  end
-
   BRL = { delimiter: '.', separator: ',', unit: 'R$', precision: 2, position: 'before' }.freeze
 
   NUM_SING = 0
@@ -231,12 +222,9 @@ class Extenso
     # VALOR DE RETORNO:
     # (String) O número por extenso
 
-    # ----- CARREGA CONFIGURAÇÃO -----
-    load_config
-
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -352,14 +340,11 @@ class Extenso
     # VALOR DE RETORNO:
     # (String) O valor monetário por extenso
 
-    # ----- CARREGA CONFIGURAÇÃO -----
-    load_config
-
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
 
-      return 'Zero'
+      return 'Zero Centavos'
     end
 
     unless float?(valor.to_f.round(casas_decimais).to_s)
@@ -437,12 +422,9 @@ class Extenso
     # VALOR DE RETORNO:
     # (String) O número por extenso
 
-    # ----- CARREGA CONFIGURAÇÃO -----
-    load_config
-
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
     if valor.nil?
-      raise "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo" if @config[:raise_for_nil] == 'true'
+      raise "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
 
       return 'Zero'
     end
@@ -464,15 +446,15 @@ class Extenso
       resto = valor - dezena
       ret = "#{DEZENAS_ORDINAL[genero][dezena]} "
       ret += ordinal(resto, genero) if resto.positive?
-      ret
+      ret.rstrip
     elsif valor >= 100 && valor <= 999
       centena = valor - (valor % 100)
       resto = valor - centena
       ret = "#{CENTENAS_ORDINAL[genero][centena]} "
       ret += ordinal(resto, genero) if resto.positive?
-      ret
+      ret.rstrip
     elsif valor == 1000
-      "#{MILHAR_ORDINAL[genero][valor]} "
+      MILHAR_ORDINAL[genero][valor]
     end
   end
 
