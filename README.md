@@ -59,6 +59,20 @@ require 'Extenso.rb'
     Extenso.real_formatado(0) # R$ 0,00
     Extenso.real_formatado(1) # R$ 1,00
 
+### Configurando exeptions para valores nulos
+É possivel que na sua regra de negócio ou case de uso, seja passado um valor vazio para tentar escrever por extenso, nesses casos por padrão será retornado "Zero" para inteiros e "Zero centavos" para decimais. No entanto você pode configurar em suas váriáis de ambiente o seguinte parâmetro:
+    
+    EXTENSO_RAISE_FOR_NIL=true
+
+E adicionar o arquivo "config/extensobr.yml", com a seguinte configuração:
+    
+    raise_for_nil: ENV['EXTENSO_RAISE_FOR_NIL'] || 'false'
+
+Dessa forma, você esperar em seus testes a seguinte e excessão:
+
+    "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo"
+    
+
 # Developers
 
 [Henrique Max](https://github.com/rickmax),
