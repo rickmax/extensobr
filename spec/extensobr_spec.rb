@@ -178,14 +178,17 @@ describe 'Extensobr' do
     end
   end
 
-  context 'valor de payload nil' do
+  context 'valor de payload nil ou vazio' do
     it 'retorno quando envia nil com raise desligado' do
       expect(Extenso.numero(nil)).to eq('Zero')
       expect(Extenso.moeda(nil)).to eq('Zero Centavos')
       expect(Extenso.ordinal(nil)).to eq('Zero')
+      expect(Extenso.numero('')).to eq('Zero')
+      expect(Extenso.moeda('')).to eq('Zero Centavos')
+      expect(Extenso.ordinal('')).to eq('Zero')
     end
 
-    it 'retorno quando envia nil com raise ligado' do
+    it 'retorno quando envia nil ou vazio com raise ligado' do
       ENV['EXTENSO_RAISE_FOR_NIL'] = 'true'
       Object.send(:remove_const, :Settings) if Kernel.const_defined?('Settings')
       Object.send(:remove_const, :Extenso) if Kernel.const_defined?('Extenso')
@@ -195,6 +198,9 @@ describe 'Extensobr' do
       expect { Extenso.numero(nil) }.to raise_error "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo"
       expect { Extenso.moeda(nil) }.to raise_error "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo"
       expect { Extenso.ordinal(nil) }.to raise_error "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo"
+      expect { Extenso.numero('') }.to raise_error "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo"
+      expect { Extenso.moeda('') }.to raise_error "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo"
+      expect { Extenso.ordinal('') }.to raise_error "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo"
     end
   end
 end

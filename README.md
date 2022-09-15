@@ -60,17 +60,23 @@ require 'Extenso.rb'
     Extenso.real_formatado(1) # R$ 1,00
 
 ### Configurando exeptions para valores nulos
-É possivel que na sua regra de negócio ou case de uso, seja passado um valor vazio para tentar escrever por extenso, nesses casos por padrão será retornado "Zero" para inteiros e "Zero centavos" para decimais. No entanto você pode configurar em suas váriáis de ambiente o seguinte parâmetro:
+É possivel que na sua regra de negócio ou caso de uso, seja passado um valor nulo ou vazio para tentar escrever por extenso, nesses casos por padrão será retornado "Zero" para inteiros e "Zero centavos" para decimais. No entanto você pode configurar para receber uma exceção caso seja necessário. Em suas váriáis de ambiente adicione a seguinte chave e valor:
     
     EXTENSO_RAISE_FOR_NIL=true
 
-E adicionar o arquivo "config/extensobr.yml", com a seguinte configuração:
+E adicione um arquivo "config/extensobr.yml", com a seguinte configuração:
     
     raise_for_nil: ENV['EXTENSO_RAISE_FOR_NIL'] || 'false'
 
-Dessa forma, você esperar em seus testes a seguinte e excessão:
+Você pode rodar o seguinte script para criar seu arquivo a partir da pasta raiz do seu projeto rails:
 
-    "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo"
+    echo 'extensobr_settings:\n  raise_for_nil: true\n  use_core_exts: true' > config/extensobr.yml
+
+    
+
+Dessa forma, você pode esperar em seus testes a seguinte excessão:
+
+    RuntimeError: [Exceção em Extenso.numero] Parâmetro 'valor' é nulo
     
 
 # Developers
@@ -82,9 +88,9 @@ Dessa forma, você esperar em seus testes a seguinte e excessão:
 
 ## Como contribuir?
 
-1. Fazer um fork do projeto
-1. Fazer os devidos ajustes com os respectivos testes
-1. Fazer pull request
+1. Faça um fork do projeto;
+1. Adicione os devidos ajustes ou melhorias com os respectivos testes;
+1. Envie pull request;
 
 
 ## Licença

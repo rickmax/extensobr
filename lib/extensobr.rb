@@ -4,10 +4,10 @@ require 'extensobr/version'
 require 'settings'
 
 # ----- CARREGA CONFIGURAÇÃO -----
-Settings.load_settings
+Settings.load_extensobr_settings
 
 # ----- CARREGA CORE EXTENSÕES -----
-if Settings.settings[:use_core_exts] == 'true'
+if Settings.extensobr_settings[:use_core_exts] == 'true'
   require 'core_exts/float'
   require 'core_exts/integer'
   require 'core_exts/string'
@@ -223,8 +223,8 @@ class Extenso
     # (String) O número por extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
-    if valor.nil?
-      raise "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
+    if valor.nil? || valor == ''
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' é nulo" if Settings&.extensobr_settings&.dig(:raise_for_nil) == 'true'
 
       return 'Zero'
     end
@@ -341,8 +341,8 @@ class Extenso
     # (String) O valor monetário por extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
-    if valor.nil?
-      raise "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
+    if valor.nil? || valor == ''
+      raise "[Exceção em Extenso.moeda] Parâmetro 'valor' é nulo" if Settings&.extensobr_settings&.dig(:raise_for_nil) == 'true'
 
       return 'Zero Centavos'
     end
@@ -423,8 +423,8 @@ class Extenso
     # (String) O número por extenso
 
     # ----- VALIDAÇÃO DOS PARÂMETROS DE ENTRADA ----
-    if valor.nil?
-      raise "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo" if Settings.settings[:raise_for_nil] == 'true'
+    if valor.nil? || valor == ''
+      raise "[Exceção em Extenso.ordinal] Parâmetro 'valor' é nulo" if Settings&.extensobr_settings&.dig(:raise_for_nil) == 'true'
 
       return 'Zero'
     end
