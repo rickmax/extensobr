@@ -176,9 +176,27 @@ describe 'Extensobr' do
       expect(Extenso.real_formatado(1_300_570.82)).to eq('R$ 1.300.570,82')
       expect(Extenso.real_formatado(100_300_570.82)).to eq('R$ 100.300.570,82')
     end
+
+    it 'retorno de valores negativos para moéda brasileira R$' do
+      expect(Extenso.real_formatado(-0)).to eq('R$ 0,00')
+      expect(Extenso.real_formatado(-0.82)).to eq('R$ -0,82')
+      expect(Extenso.real_formatado(-1)).to eq('R$ -1,00')
+      expect(Extenso.real_formatado(-10)).to eq('R$ -10,00')
+      expect(Extenso.real_formatado(-10.5)).to eq('R$ -10,50')
+      expect(Extenso.real_formatado(-100.5)).to eq('R$ -100,50')
+      expect(Extenso.real_formatado(-3570.82)).to eq('R$ -3.570,82')
+      expect(Extenso.real_formatado(-30_570.82)).to eq('R$ -30.570,82')
+      expect(Extenso.real_formatado(-300_570.82)).to eq('R$ -300.570,82')
+      expect(Extenso.real_formatado(-1_300_570.82)).to eq('R$ -1.300.570,82')
+      expect(Extenso.real_formatado(-100_300_570.82)).to eq('R$ -100.300.570,82')
+    end
   end
 
-  context 'valor de payload nil ou vazio' do
+  context 'valor de payload inválido' do
+    it 'retorno de erro para valores decimais em Extenso.numero' do
+      expect { Extenso.numero(0.1) }.to raise_error "[Exceção em Extenso.numero] Parâmetro 'valor' deve ser um número inteiro, (recebido: 0.1)"
+    end
+
     it 'retorno quando envia nil com raise desligado' do
       expect(Extenso.numero(nil)).to eq('Zero')
       expect(Extenso.moeda(nil)).to eq('Zero Centavos')

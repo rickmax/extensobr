@@ -229,8 +229,8 @@ class Extenso
       return 'Zero'
     end
 
-    unless int?(valor) && !valor.nil?
-      "[Exceção em Extenso.numero] Parâmetro 'valor' não é numérico (recebido: '#{valor}')"
+    unless valor.is_a?(Integer) && !valor.nil?
+      raise "[Exceção em Extenso.numero] Parâmetro 'valor' deve ser um número inteiro, (recebido: #{valor})"
     end
 
     if valor <= 0
@@ -460,12 +460,19 @@ class Extenso
 
   # Gera o valor em formato de Real
   #
-  # Exemplo:
+  # Exemplo +:
   #   Extenso.real_formatado(10) - R$ 10,00
   #   Extenso.real_formatado(1.55) - R$ 1,55
-  #
+  # Exemplo -:
+  #   Extenso.real_formatado(10.555) - R$ 10,55
+  #   Extenso.real_formatado(1000.555) - R$ 1.000,55
   # @params[Object]
   def self.real_formatado(valor)
+    positive = true
+    if valor < 0
+      valor = valor.abs
+      positive = false
+    end
     float_valor = format('%#0.02f', valor)
     float_valor = float_valor.chars.reverse.insert(6, '.').reverse.join if float_valor.chars.count >= 7
 
@@ -473,7 +480,10 @@ class Extenso
 
     float_valor = float_valor.chars.reverse
     float_valor[2] = ','
-
-    "R$ #{float_valor.reverse.join}"
+    if positive
+      "R$ #{float_valor.reverse.join}"
+    else
+      "R$ -#{float_valor.reverse.join}"
+    end
   end
 end
